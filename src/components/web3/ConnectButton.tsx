@@ -14,7 +14,7 @@ import { useWalletStore } from '../../state';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   width: 120,
-  height: 38,
+  height: 40,
   fontWeight: 600,
   color: theme.palette.common.white,
   ':disabled': {

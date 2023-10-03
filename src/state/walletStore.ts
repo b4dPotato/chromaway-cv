@@ -19,7 +19,6 @@ export const useWalletStore = create<WalletState>()(
     {
       name: 'wallet-storage',
       storage: createJSONStorage(() => localStorage),
-      skipHydration: false,
     }
   )
 )

@@ -9,8 +9,11 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { useSetChain } from '@web3-onboard/react';
 import { useState } from 'react';
 import networks from 'src/constants/networks';
+import useAccount from 'src/hooks/useAccount';
+import { useNetworkStore } from 'src/state';
 
 const StyledNetworkSelect = styled(Select)(({ theme }) => ({
   background: theme.palette.common.white,
@@ -22,12 +25,27 @@ const StyledTypography = styled(Typography)({
 });
 
 const NetworkSelect = () => {
+  const [, setChain] = useSetChain();
+  const account = useAccount();
+  const { network, setNetwork } = useNetworkStore();
+
   const [selectedChainId, setChainId] = useState<string | null>(
-    networks[0].chainId
+    network?.chainId || ''
   );
 
-  const handleSelectChainId = (event: SelectChangeEvent<unknown>) => {
-    setChainId(event.target.value as string);
+  const handleChangeChain = async (event: SelectChangeEvent<unknown>) => {
+    const newChainId = event.target.value as string;
+    if (!account) {
+      setChainId(newChainId);
+      setNetwork(networks.find((network) => network.chainId === newChainId)!);
+      return;
+    }
+
+    const chainChanged = await setChain({ chainId: newChainId });
+    if (chainChanged) {
+      setChainId(newChainId);
+      setNetwork(networks.find((network) => network.chainId === newChainId)!);
+    }
   };
 
   return (
@@ -38,7 +56,7 @@ const NetworkSelect = () => {
         input={<OutlinedInput sx={{ borderRadius: '4px', height: 44 }} />}
         value={selectedChainId}
         label="Chain Id"
-        onChange={handleSelectChainId}
+        onChange={handleChangeChain}
         size="small"
         inputProps={{ 'aria-label': 'Without label' }}
       >
@@ -46,7 +64,10 @@ const NetworkSelect = () => {
           <em>Select Network</em>
         </MenuItem>
         {networks.map((network) => (
-          <MenuItem value={network.chainId}>
+          <MenuItem
+            key={`network-select_${network.chainId}`}
+            value={network.chainId}
+          >
             <Grid container wrap="nowrap" alignItems="center">
               <Avatar
                 alt={network.networkName}

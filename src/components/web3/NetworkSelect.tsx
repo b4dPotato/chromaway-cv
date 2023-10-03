@@ -10,10 +10,11 @@ import {
   styled,
 } from '@mui/material';
 import { useSetChain } from '@web3-onboard/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { networks } from 'src/constants/networks';
 import useAccount from 'src/hooks/useAccount';
 import { useNetworkStore } from 'src/state';
+import isNetworkSupported from 'src/utils/is-network-supported';
 
 const StyledNetworkSelect = styled(Select)(({ theme }) => ({
   background: theme.palette.common.white,
@@ -25,13 +26,23 @@ const StyledTypography = styled(Typography)({
 });
 
 const NetworkSelect = () => {
-  const [, setChain] = useSetChain();
+  const [{ connectedChain }, setChain] = useSetChain();
   const account = useAccount();
   const { network, setNetwork } = useNetworkStore();
 
   const [selectedChainId, setChainId] = useState<string | null>(
     network?.chainId || ''
   );
+
+  useEffect(() => {
+    if (
+      connectedChain &&
+      connectedChain.id !== selectedChainId &&
+      isNetworkSupported(connectedChain.id)
+    ) {
+      setChainId(connectedChain.id);
+    }
+  }, [connectedChain, selectedChainId]);
 
   const handleChangeChain = async (event: SelectChangeEvent<unknown>) => {
     const newChainId = event.target.value as string;

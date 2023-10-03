@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useSetChain } from '@web3-onboard/react';
 import { useState } from 'react';
-import networks from 'src/constants/networks';
+import { networks } from 'src/constants/networks';
 import useAccount from 'src/hooks/useAccount';
 import { useNetworkStore } from 'src/state';
 

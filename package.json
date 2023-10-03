@@ -16,7 +16,6 @@
     "axios": "^1.5.1",
     "big.js": "^6.2.1",
     "ethers": "^6.7.1",
-    "moralis": "^2.23.1",
     "react": "^18.2.0",
     "react-app-rewired": "^2.2.1",
     "react-dom": "^18.2.0",

@@ -1,21 +1,25 @@
-import { EvmChain } from '@moralisweb3/common-evm-utils';
 import { INetwork } from "src/types/networks"
+
+enum SupportedNetworks {
+  Ethereum = '0x1',
+  BscTestnet = '0x61'
+}
 
 const networks: INetwork[] = [
   {
-    chainId: EvmChain.ETHEREUM.hex,
+    chainId: SupportedNetworks.Ethereum,
     token: 'ETH',
     networkName: 'Ethereum Mainnet',
     rpcUrl: 'https://eth.drpc.org',
-    logo: './networks/etherscan-logo.svg'
+    logo: './networks/etherscan-logo.svg',
   },
   {
-    chainId: EvmChain.BSC_TESTNET.hex,
+    chainId: SupportedNetworks.BscTestnet,
     networkName: 'Binance Smart Chain Testnet',
     token: 'tBNB',
     rpcUrl: 'https://bsc-testnet.publicnode.com',
-    logo: './networks/bnb-logo.svg'
+    logo: './networks/bnb-logo.svg',
   }
 ]
 
-export default networks
+export { networks, SupportedNetworks }

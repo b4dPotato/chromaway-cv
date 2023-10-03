@@ -1,4 +1,4 @@
-import networks from 'src/constants/networks'
+import { networks } from 'src/constants/networks'
 import { INetwork } from 'src/types/networks'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'

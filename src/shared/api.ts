@@ -1,20 +1,14 @@
-import Moralis from 'moralis';
-import { API_KEY } from 'src/constants/env';
-import { MToken } from 'src/types/moralis';
+import axios from 'axios';
+import { GetTokensInfoResponse } from 'src/types/responses';
 
-Moralis.start({
-  apiKey: API_KEY,
-});
+const API_URL = 'https://data-api.cryptocompare.com'
 
-const getTokensMetadata = async (tokensAdresses: string[], chainId: string): Promise<MToken[]> => {
-  const response = await Moralis.EvmApi.token.getTokenMetadata({
-    addresses: tokensAdresses,
-    chain: chainId,
-  });
-
-  return response.toJSON()
+const getTokensInfo = async (tokensSymbols: string[]): Promise<GetTokensInfoResponse[]> => {
+  const response = await Promise.all(tokensSymbols.map(symbol => axios.get(`${API_URL}/asset/v1/data/by/symbol?asset_symbol=${symbol}`).then(res => res.data)))
+  return response
 };
 
 export {
-  getTokensMetadata
-}
+  getTokensInfo
+};
+

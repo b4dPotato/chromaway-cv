@@ -1,5 +1,5 @@
 import init from "@web3-onboard/core"
-import networks from "../../constants/networks"
+import { networks } from "../../constants/networks"
 import wallets from "./wallets"
 
 const onboard = init({

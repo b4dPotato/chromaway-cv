@@ -55,11 +55,8 @@ const TransferPage = () => {
   const sendCrypto = async () => {
     if (!selectedToken?.decimals || !account || !address || !amount) return;
     try {
-      let tx = await transferNativeToken(account, address, amount);
-      console.log(tx);
-    } catch (e) {
-      console.log(e);
-    }
+      await transferNativeToken(account, address, amount);
+    } catch (e) {}
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +75,6 @@ const TransferPage = () => {
       error: 'Fill all the fields',
     };
   }, [address, amount, selectedToken]);
-
-  console.log(isValid);
 
   return (
     <Box pt={20}>

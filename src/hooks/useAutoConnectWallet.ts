@@ -7,7 +7,6 @@ const useAutoConnectWallet = () => {
 
   useEffect(() => {
     const { wallets } = onboard.state.get()
-    console.log(lastUsedWallet, isAuthorized)
 
     if (wallets.length === 0 && lastUsedWallet && isAuthorized) {
       onboard.connectWallet({ autoSelect: { label: lastUsedWallet, disableModals: false } })

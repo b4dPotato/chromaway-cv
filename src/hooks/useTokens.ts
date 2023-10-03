@@ -38,12 +38,12 @@ const useTokens = () => {
 
     for (let value of data) {
       const tokenData = value.Data
-      const knownTokenAddress = networkTokens.find(token => token.symbol.includes(tokenData.SYMBOL))?.address
-      if (!knownTokenAddress) continue;
+      const knownToken = networkTokens.find(token => token.symbol.includes(tokenData.SYMBOL))
+      if (!knownToken) continue;
 
       expandedTokens.push({
-        address: knownTokenAddress,
-        symbol: tokenData.SYMBOL,
+        address: knownToken.address,
+        symbol: knownToken.symbol,
         name: tokenData.NAME,
         decimals: tokenData.ASSET_DECIMAL_POINTS,
         logo: tokenData.LOGO_URL,

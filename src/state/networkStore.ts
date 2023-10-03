@@ -8,6 +8,8 @@ interface NetworkState {
   setNetwork: (value: INetwork) => void 
 }
 
+export const NETWORK_STORAGE = 'network-storage'
+
 export const useNetworkStore = create<NetworkState>()(
   persist(
     (set) => ({
@@ -15,7 +17,7 @@ export const useNetworkStore = create<NetworkState>()(
       setNetwork: (value: INetwork) => set({ network: value })
     }),
     {
-      name: 'network-storage',
+      name: NETWORK_STORAGE,
       storage: createJSONStorage(() => localStorage),
     }
   )

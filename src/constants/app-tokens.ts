@@ -14,17 +14,19 @@ const mainnetTokens: IToken[] = [{
 },
 ]
 
+const nativeTokens = ['ETH','tBNB']
+
 const testnetTokens: IToken[] = [{
-  symbol: 'wBNB',
-  address: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'
+  symbol: 'tBNB',
+  address: '0x0000000000000000000000000000000000000000'
 },
 {
   symbol: 'USDC',
-  address: '0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2'
+  address: '0x16227D60f7a0e586C66B005219dfc887D13C9531'
 },
 {
   symbol: 'tCHR',
-  address: '0x16227D60f7a0e586C66B005219dfc887D13C9531'
+  address: '0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2'
 },
 ]
 
@@ -34,4 +36,5 @@ export {
   mainnetTokens,
   testnetTokens,
   tokensSymbols,
+  nativeTokens,
 }

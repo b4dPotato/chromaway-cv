@@ -38,6 +38,28 @@ const theme = createTheme({
         },
       },
     },
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          background: 'white',
+          borderRadius: 4,
+          input: {
+            padding: 15,
+          },
+          ':hover': {
+            outline: '2px solid black',
+            background: 'white',
+          },
+          '&.Mui-focused': {
+            outline: '2px solid black',
+            background: 'white',
+            input: {
+              color: 'black',
+            },
+          },
+        },
+      },
+    },
   },
 });
 

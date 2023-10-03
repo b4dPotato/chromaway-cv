@@ -1,0 +1,16 @@
+const mainnetTokens = [
+  "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // wETH
+  "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC 
+  "0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2" // CHR
+]
+
+const testnetTokens = [
+  "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd", // wBNB 
+  "0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2", // tCHR 
+  "0x16227D60f7a0e586C66B005219dfc887D13C9531" // USDC
+]
+
+export {
+  mainnetTokens,
+  testnetTokens
+}

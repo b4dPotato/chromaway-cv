@@ -18,7 +18,6 @@ import {
   transferNativeToken,
 } from 'src/shared/web3/events';
 import { IToken } from 'src/types/token';
-import formatBalance from 'src/utils/format-balance';
 import isNativeToken from 'src/utils/is-native-token';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -112,7 +111,7 @@ const TransferPage = () => {
                 placeholder="How much? ... 3 ETH"
               />
               <Typography mt={1} color="white">
-                Balance: {balance ? formatBalance(balance) : '--'}
+                Balance: {balance || '--'}
               </Typography>
             </Grid>
             <TokenSelect onSelect={handleTokenSelect} />

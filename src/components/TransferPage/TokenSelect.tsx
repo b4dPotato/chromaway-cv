@@ -10,8 +10,9 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTokens from 'src/hooks/useTokens';
+import { useNetworkStore } from 'src/state';
 import { IToken } from 'src/types/token';
 
 const StyledTokenSelect = styled(Select)(({ theme }) => ({
@@ -36,8 +37,13 @@ interface Props {
 }
 
 const TokenSelect = ({ onSelect }: Props) => {
+  const { network } = useNetworkStore();
   const [selectedToken, setSelectedToken] = useState<IToken | null>();
   const { tokens, loading } = useTokens();
+
+  useEffect(() => {
+    setSelectedToken(null);
+  }, [network]);
 
   const handleTokenChange = (event: SelectChangeEvent<unknown>) => {
     const newAddress = event.target.value;

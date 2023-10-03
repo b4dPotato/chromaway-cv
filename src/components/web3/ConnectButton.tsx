@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   CircularProgress,
   Paper,
   Popover,
@@ -9,8 +10,8 @@ import { useConnectWallet } from '@web3-onboard/react';
 import { useId, useRef } from 'react';
 import useAccount from '../../hooks/useAccount';
 import usePopupState from '../../hooks/usePopupState';
-import concatAddress from '../utils/concat-address';
 import { useWalletStore } from '../../state';
+import concatAddress from 'src/utils/concat-address';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   width: 120,
@@ -22,7 +23,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ConnectButton = () => {
+const ConnectButton = (props: ButtonProps) => {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const { clearWallet, setLastUsedWallet } = useWalletStore();
   const account = useAccount();
@@ -53,6 +54,7 @@ const ConnectButton = () => {
           onClick={open}
           variant="outlined"
           color="secondary"
+          {...props}
         >
           {concatAddress(account)}
         </StyledButton>
@@ -87,6 +89,7 @@ const ConnectButton = () => {
       variant="contained"
       color="secondary"
       disabled={connecting}
+      {...props}
     >
       {connecting ? (
         <CircularProgress sx={{ color: 'white' }} size="1.3rem" />

@@ -4,6 +4,8 @@ import theme from './theme';
 import onboard from './shared/web3/onboard';
 import { Web3OnboardProvider } from '@web3-onboard/react';
 import useAutoConnectWallet from './hooks/useAutoConnectWallet';
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
 
 function App() {
   useAutoConnectWallet();
@@ -13,7 +15,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Layout>
-          <>Hello world!</>
+          <RouterProvider router={router} />
         </Layout>
       </ThemeProvider>
     </Web3OnboardProvider>

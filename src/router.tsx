@@ -1,18 +1,16 @@
-import {
-  createBrowserRouter
-} from "react-router-dom";
-import TransferPage from "./pages/TransferPage";
-import WalletPage from "./pages/WalletPage";
+import { createBrowserRouter } from 'react-router-dom';
+import TransferPage from './pages/TransferPage';
+import WalletPage from './pages/WalletPage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <TransferPage />
+    path: '/',
+    element: <TransferPage />,
   },
   {
-    path: "about",
+    path: 'about',
     element: <WalletPage />,
   },
 ]);
 
-export default router
+export default router;

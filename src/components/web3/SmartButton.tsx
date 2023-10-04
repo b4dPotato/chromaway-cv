@@ -31,7 +31,7 @@ const SmartButton = ({ onClick, children, ...props }: Props) => {
   };
 
   if (!account) {
-    return <ConnectButton fullWidth {...props} />;
+    return <ConnectButton fullWidth {...props} disabled={false} />;
   }
 
   if (!isNetworkSupported(connectedChain?.id)) {

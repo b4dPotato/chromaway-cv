@@ -16,6 +16,7 @@ import {
   balanceOf,
   balanceOfNativeToken,
   transferNativeToken,
+  transferToken,
 } from 'src/shared/web3/events';
 import { IToken } from 'src/types/token';
 import isNativeToken from 'src/utils/is-native-token';
@@ -55,7 +56,11 @@ const TransferForm = () => {
   const sendCrypto = async () => {
     if (!selectedToken?.decimals || !account || !address || !amount) return;
     try {
-      await transferNativeToken(account, address, amount);
+      if (isNativeToken(selectedToken.symbol)) {
+        await transferNativeToken(account, address, amount);
+      } else {
+        await transferToken(selectedToken.address, address, amount);
+      }
     } catch (e) {}
   };
 

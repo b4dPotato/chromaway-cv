@@ -7,7 +7,7 @@ import { useNetworkStore } from '../state';
 const useAutoManageNetwork = () => {
   const [{ connectedChain }] = useSetChain();
   const { network, setNetwork } = useNetworkStore();
-  console.log(connectedChain, isNetworkSupported(connectedChain?.id), connectedChain?.id === network.chainId, network)
+
   useEffect(() => {
     if (
       isNetworkSupported(connectedChain?.id) &&

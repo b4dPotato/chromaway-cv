@@ -5,7 +5,7 @@ import Logo from './Logo';
 
 const Header = () => {
   return (
-    <AppBar position="sticky" sx={{ height: 70, px: 10 }}>
+    <AppBar position="sticky" sx={{ height: 70 }}>
       <Container maxWidth="lg" sx={{ height: 'inherit' }}>
         <Grid
           container
@@ -21,6 +21,7 @@ const Header = () => {
             justifyContent="flex-end"
             alignItems="center"
             columnSpacing={3}
+            flexWrap="nowrap"
           >
             <Grid item>
               <NetworkSelect />

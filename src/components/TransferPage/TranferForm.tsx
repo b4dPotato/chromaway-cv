@@ -27,6 +27,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   margin: '0 auto',
   background: theme.palette.primary.main,
   padding: '40px 80px',
+  [theme.breakpoints.down('md')]: {
+    padding: '20px',
+  },
 }));
 
 const TransferForm = () => {
@@ -97,11 +100,17 @@ const TransferForm = () => {
 
   return (
     <StyledPaper elevation={3}>
-      <Typography color="white" variant="h5" align="center" fontWeight={600}>
+      <Typography
+        color="white"
+        variant="h5"
+        align="center"
+        fontWeight={600}
+        mb={4}
+      >
         Send Crypto in One Click!
       </Typography>
 
-      <Box mt={8}>
+      <Box>
         <FilledInput
           onChange={handleAddressChange}
           fullWidth

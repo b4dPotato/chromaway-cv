@@ -25,6 +25,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   margin: '0 auto',
   background: theme.palette.primary.main,
   padding: '40px 80px',
+  [theme.breakpoints.down('md')]: {
+    padding: '20px',
+  },
 }));
 
 const WalletFunds = () => {
@@ -89,7 +92,7 @@ const WalletFunds = () => {
         variant="h5"
         align="center"
         fontWeight={600}
-        mb={2}
+        mb={4}
       >
         Your Funds
       </Typography>

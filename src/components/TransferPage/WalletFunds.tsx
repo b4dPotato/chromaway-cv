@@ -1,5 +1,6 @@
 import {
   Avatar,
+  CircularProgress,
   List,
   ListItem,
   ListItemAvatar,
@@ -63,6 +64,23 @@ const WalletFunds = () => {
 
     fetchAllBalances();
   }, [account, loading, tokens]);
+
+  if (loading) {
+    return (
+      <StyledPaper sx={{ textAlign: 'center' }}>
+        <Typography
+          color="white"
+          variant="h5"
+          align="center"
+          fontWeight={600}
+          mb={2}
+        >
+          Your Funds
+        </Typography>
+        <CircularProgress color="secondary" size={50} sx={{ my: 2 }} />
+      </StyledPaper>
+    );
+  }
 
   return (
     <StyledPaper>

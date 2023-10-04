@@ -8,6 +8,8 @@ import {
   SelectChangeEvent,
   Typography,
   styled,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useSetChain } from '@web3-onboard/react';
 import { useEffect, useState } from 'react';
@@ -26,6 +28,9 @@ const StyledTypography = styled(Typography)({
 });
 
 const NetworkSelect = () => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [{ connectedChain }, setChain] = useSetChain();
   const account = useAccount();
   const { network, setNetwork } = useNetworkStore();
@@ -60,7 +65,7 @@ const NetworkSelect = () => {
   };
 
   return (
-    <FormControl fullWidth sx={{ width: 230 }} size="small">
+    <FormControl fullWidth sx={{ width: '100%', maxWidth: 230 }} size="small">
       <StyledNetworkSelect
         displayEmpty
         id="select-chain-id"
@@ -70,6 +75,24 @@ const NetworkSelect = () => {
         onChange={handleChangeChain}
         size="small"
         inputProps={{ 'aria-label': 'Without label' }}
+        {...(isSm && {
+          renderValue(value) {
+            if (!value) {
+              <MenuItem disabled value="">
+                <em>Select Network</em>
+              </MenuItem>;
+            }
+            return (
+              <Grid container wrap="nowrap" alignItems="center">
+                <Avatar
+                  alt={network.networkName}
+                  src={network.logo}
+                  sx={{ width: 30, height: 30 }}
+                />
+              </Grid>
+            );
+          },
+        })}
       >
         <MenuItem disabled value="">
           <em>Select Network</em>

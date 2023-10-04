@@ -1,11 +1,28 @@
-import { AppBar, Container, Grid } from '@mui/material';
+import {
+  AppBar,
+  Container,
+  Grid,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import ConnectButton from '../web3/ConnectButton';
 import NetworkSelect from '../web3/NetworkSelect';
 import Logo from './Logo';
 
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  height: 70,
+  [theme.breakpoints.down('sm')]: {
+    height: 90,
+  },
+}));
+
 const Header = () => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <AppBar position="sticky" sx={{ height: 70 }}>
+    <StyledAppBar position="sticky">
       <Container maxWidth="lg" sx={{ height: 'inherit' }}>
         <Grid
           container
@@ -14,7 +31,7 @@ const Header = () => {
           alignItems="center"
           height="100%"
         >
-          <Logo />
+          <Logo useMobileLogo={isSm} />
 
           <Grid
             container
@@ -32,7 +49,7 @@ const Header = () => {
           </Grid>
         </Grid>
       </Container>
-    </AppBar>
+    </StyledAppBar>
   );
 };
 

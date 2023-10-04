@@ -1,15 +1,28 @@
-import { Box, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
-const Logo = () => {
+interface Props {
+  useMobileLogo?: boolean;
+}
+
+const Logo = ({ useMobileLogo = false }: Props) => {
+  if (useMobileLogo) {
+    return (
+      <Grid container direction="row" wrap="nowrap">
+        <img alt="Logo" src="/logo.svg" style={{ width: 40, height: 40 }} />
+      </Grid>
+    );
+  }
+
   return (
-    <Box>
-      <Typography color="white" variant="h4">
+    <Grid container direction="row" wrap="nowrap">
+      <Typography color="white" variant="h4" mr={1}>
         TRANS
         <Typography variant="h4" component="span" color="yellowgreen">
           FER
         </Typography>
       </Typography>
-    </Box>
+      <img alt="Logo" src="/logo.svg" />
+    </Grid>
   );
 };
 

@@ -35,7 +35,9 @@ const ConnectButton = (props: ButtonProps) => {
   const connectWallet = async () => {
     const wallets = await connect();
     const connectedWallet = wallets[0];
-    setLastUsedWallet(connectedWallet.label);
+    if (connectedWallet) {
+      setLastUsedWallet(connectedWallet.label);
+    }
   };
 
   const disconnectWallet = () => {

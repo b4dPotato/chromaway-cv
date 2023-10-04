@@ -7,7 +7,7 @@ import {
   styled,
 } from '@mui/material';
 import { ethers } from 'ethers';
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import TokenSelect from 'src/components/TransferPage/TokenSelect';
 import SmartButton from 'src/components/web3/SmartButton';
 import { DEFAULT_DECIMALS } from 'src/constants/decimals';
@@ -18,6 +18,7 @@ import {
   transferNativeToken,
   transferToken,
 } from 'src/shared/web3/events';
+import { useNetworkStore } from 'src/state';
 import { IToken } from 'src/types/token';
 import isNativeToken from 'src/utils/is-native-token';
 
@@ -33,6 +34,7 @@ const TransferForm = () => {
   const [amount, setAmount] = useState<number>();
   const [balance, setBalance] = useState<string | null>();
   const account = useAccount();
+  const { network } = useNetworkStore();
 
   const [selectedToken, setSelectedToken] = useState<IToken | null>();
 
@@ -41,17 +43,29 @@ const TransferForm = () => {
     fetchBalance(token);
   };
 
-  const fetchBalance = async (token: IToken) => {
-    let balance = isNativeToken(token.symbol)
-      ? await balanceOfNativeToken(account)
-      : await balanceOf(token.address, account);
+  const fetchBalance = useCallback(
+    async (token: IToken) => {
+      if (!account) return;
+      let balance = isNativeToken(token.symbol)
+        ? await balanceOfNativeToken(account)
+        : await balanceOf(token.address, account);
 
-    let decimals = isNativeToken(token.symbol)
-      ? DEFAULT_DECIMALS
-      : token.decimals;
+      let decimals = isNativeToken(token.symbol)
+        ? DEFAULT_DECIMALS
+        : token.decimals;
 
-    setBalance(ethers.utils.formatUnits(balance.toString(), decimals));
-  };
+      setBalance(ethers.utils.formatUnits(balance.toString(), decimals));
+    },
+    [account]
+  );
+
+  useEffect(() => {
+    if (selectedToken) {
+      fetchBalance(selectedToken);
+    } else {
+      setBalance(null);
+    }
+  }, [fetchBalance, network, selectedToken]);
 
   const sendCrypto = async () => {
     if (!selectedToken?.decimals || !account || !address || !amount) return;

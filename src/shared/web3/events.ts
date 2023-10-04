@@ -3,29 +3,30 @@ import ERC20Abi from '../abis/ERC20Abi.json';
 import { SupportedNetworks } from 'src/constants/networks';
 import { INFURA_PROJECT_ID } from 'src/constants/env';
 import getLastUsedNetworkId from 'src/utils/get-last-used-network';
+import { Errors } from 'src/constants/errors';
 
-const ethereum = (window as any).ethereum as any;
-
+const ethereum = (window as any).ethereum;
 const mainnetProvider = new ethers.providers.JsonRpcProvider(
   `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`
 );
 const testnetProvider = new ethers.providers.JsonRpcProvider(
   'https://data-seed-prebsc-1-s1.binance.org:8545/'
 );
-const webProvider = new ethers.providers.Web3Provider(ethereum);
+const web3Provider = ethereum
+  ? new ethers.providers.Web3Provider(ethereum)
+  : null;
 
 type Address = string;
 
-const transferToken = async (
-  token: Address,
-  to: Address,
-  amount: number
-) => {
+const transferToken = async (token: Address, to: Address, amount: number) => {
+  if (!web3Provider) {
+    throw Error(Errors.NoEthereum);
+  }
   const tokenContractAddress = token;
   const tokenContract = new ethers.Contract(
     tokenContractAddress,
     ERC20Abi,
-    webProvider.getSigner()
+    web3Provider.getSigner()
   );
 
   const rawAmount = ethers.utils.parseUnits(amount.toString(), 6);
@@ -39,6 +40,9 @@ const transferNativeToken = async (
   to: Address,
   amount: number
 ) => {
+  if (!ethereum) {
+    throw Error(Errors.NoEthereum);
+  }
   const chainId = getLastUsedNetworkId();
   const provider =
     chainId === SupportedNetworks.Ethereum ? mainnetProvider : testnetProvider;
@@ -58,11 +62,10 @@ const transferNativeToken = async (
   });
 };
 
-const balanceOf = (
-  token: Address,
-  owner: Address,
-  id?: string
-): Promise<BigNumber> => {
+const balanceOf = (token: Address, owner: Address): Promise<BigNumber> => {
+  if (!ethereum) {
+    throw Error(Errors.NoEthereum);
+  }
   const chainId = getLastUsedNetworkId();
   const provider =
     chainId === SupportedNetworks.Ethereum ? mainnetProvider : testnetProvider;
@@ -72,6 +75,9 @@ const balanceOf = (
 };
 
 const balanceOfNativeToken = (owner: Address): Promise<BigNumber> => {
+  if (!ethereum) {
+    throw Error(Errors.NoEthereum);
+  }
   const chainId = getLastUsedNetworkId();
   const provider =
     chainId === SupportedNetworks.Ethereum ? mainnetProvider : testnetProvider;

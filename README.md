@@ -1,6 +1,7 @@
 # Transfer Application
 
 Features:
-- Transfer tokens (Now only native tokens are available)
+- Walelt connect
+- Transfer tokens
 - Show user balances
-- Detect wrong network
+
